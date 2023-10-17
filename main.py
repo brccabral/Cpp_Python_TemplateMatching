@@ -19,3 +19,12 @@ cv2.waitKey()
 cv2.destroyAllWindows()
 
 # %%
+result = cv2.matchTemplate(farm_img, needle_img, cv2.TM_CCOEFF_NORMED)
+
+# %%
+# show result
+cv2.imshow("Result", result)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+# %%
