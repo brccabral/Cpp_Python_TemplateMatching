@@ -50,13 +50,40 @@ farm_img = cv2.imread("assets/farm.png", cv2.IMREAD_UNCHANGED)
 
 # %%
 threshold = 0.60
-yloc, xloc = np.where(result >= threshold)
+yloc, xloc = np.where(result >= np.array(threshold))
 
 # %%
 len(xloc)
 
 # %%
 for x, y in zip(xloc, yloc):
+    cv2.rectangle(farm_img, (x, y), (x + w, y + h), (0, 255, 255), 2)
+
+# %%
+# show farm
+cv2.imshow("Farm", farm_img)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+# %%
+rectangles = []
+for x, y in zip(xloc, yloc):
+    rectangles.append([int(x), int(y), int(w), int(h)])
+    # force a duplication so cv2.groupRectangles don't remove
+    # locations that have only one rectangle
+    rectangles.append([int(x), int(y), int(w), int(h)])
+
+# %%
+rectangles, weights = cv2.groupRectangles(rectangles, 1, 0.2)
+len(rectangles)
+
+# %%
+# reset farm
+farm_img = cv2.imread("assets/farm.png", cv2.IMREAD_UNCHANGED)
+
+# %%
+# loop the new rectangles
+for x, y, w, h in rectangles:
     cv2.rectangle(farm_img, (x, y), (x + w, y + h), (0, 255, 255), 2)
 
 # %%
