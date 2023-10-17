@@ -25,5 +25,22 @@ int main(int argc, char const *argv[])
     cv::waitKey();
     cv::destroyAllWindows();
 
+    double minVal;
+    double maxVal;
+    cv::Point minLoc;
+    cv::Point maxLoc;
+    minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat());
+
+    int width = needle_img.cols;
+    int height = needle_img.rows;
+
+    cv::rectangle(farm_img, maxLoc, cv::Point(maxLoc.x + width, maxLoc.y + height), cv::Scalar(0, 255, 255), 2);
+
+    // show farm
+    cv::imshow("Farm", farm_img);
+    cv::waitKey();
+    cv::destroyAllWindows();
+
+
     return 0;
 }
