@@ -43,3 +43,26 @@ cv2.rectangle(farm_img, max_loc, (max_loc[0] + w, max_loc[1] + h), (0, 255, 255)
 cv2.imshow("Farm", farm_img)
 cv2.waitKey()
 cv2.destroyAllWindows()
+
+# %%
+# reset farm
+farm_img = cv2.imread("assets/farm.png", cv2.IMREAD_UNCHANGED)
+
+# %%
+threshold = 0.60
+yloc, xloc = np.where(result >= threshold)
+
+# %%
+len(xloc)
+
+# %%
+for x, y in zip(xloc, yloc):
+    cv2.rectangle(farm_img, (x, y), (x + w, y + h), (0, 255, 255), 2)
+
+# %%
+# show farm
+cv2.imshow("Farm", farm_img)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+# %%
