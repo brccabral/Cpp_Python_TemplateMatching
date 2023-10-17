@@ -13,3 +13,9 @@ cv2.waitKey()
 cv2.destroyAllWindows()
 
 # %%
+# show needle
+cv2.imshow("Needle", needle_img)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+# %%
