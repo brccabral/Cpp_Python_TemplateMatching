@@ -28,3 +28,18 @@ cv2.waitKey()
 cv2.destroyAllWindows()
 
 # %%
+min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+
+# %%
+h, w, c = needle_img.shape
+
+# %%
+# adds a yellow rectangle at the best needle result position
+# changes farm_img
+cv2.rectangle(farm_img, max_loc, (max_loc[0] + w, max_loc[1] + h), (0, 255, 255), 2)
+
+# %%
+# show farm
+cv2.imshow("Farm", farm_img)
+cv2.waitKey()
+cv2.destroyAllWindows()
