@@ -1,2 +1,4 @@
 .vscode/
 assets/
+build_dir/
+install_dir/
