@@ -41,6 +41,34 @@ int main(int argc, char const *argv[])
     cv::waitKey();
     cv::destroyAllWindows();
 
+    farm_img = cv::imread("assets/farm.png", cv::IMREAD_UNCHANGED);
+
+    float threshold = 0.6f;
+    cv::Mat result_threshold = result >= threshold;
+    std::vector<cv::Point> loc;
+
+    for (int row = 0; row < result_threshold.rows; row++)
+    {
+        for (int col = 0; col < result_threshold.cols; col++)
+        {
+            if (result_threshold.at<bool>(row, col))
+            {
+                loc.emplace_back(col, row);
+            }
+        }
+    }
+
+    std::cout << loc.size() << std::endl;
+
+    for (auto &&p : loc)
+    {
+        cv::rectangle(farm_img, p, cv::Point(p.x + width, p.y + height), cv::Scalar(0, 255, 255), 2);
+    }
+
+    // show farm
+    cv::imshow("Farm", farm_img);
+    cv::waitKey();
+    cv::destroyAllWindows();
 
     return 0;
 }
