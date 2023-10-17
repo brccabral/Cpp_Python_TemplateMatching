@@ -41,6 +41,7 @@ int main(int argc, char const *argv[])
     cv::waitKey();
     cv::destroyAllWindows();
 
+    // reset farm
     farm_img = cv::imread("assets/farm.png", cv::IMREAD_UNCHANGED);
 
     float threshold = 0.6f;
@@ -63,6 +64,32 @@ int main(int argc, char const *argv[])
     for (auto &&p : loc)
     {
         cv::rectangle(farm_img, p, cv::Point(p.x + width, p.y + height), cv::Scalar(0, 255, 255), 2);
+    }
+
+    // show farm
+    cv::imshow("Farm", farm_img);
+    cv::waitKey();
+    cv::destroyAllWindows();
+
+    std::vector<cv::Rect> rectangles;
+    for (auto &&p : loc)
+    {
+        rectangles.emplace_back(p.x, p.y, width, height);
+        // force a duplication so cv::groupRectangles don't remove
+        // locations that have only one rectangle
+        rectangles.emplace_back(p.x, p.y, width, height);
+    }
+    cv::groupRectangles(rectangles, 1, 0.2);
+
+    std::cout << rectangles.size() << std::endl;
+
+    // reset farm
+    farm_img = cv::imread("assets/farm.png", cv::IMREAD_UNCHANGED);
+
+    // loop the new rectangles
+    for (auto &&r : rectangles)
+    {
+        cv::rectangle(farm_img, r, cv::Scalar(0, 255, 255), 2);
     }
 
     // show farm
