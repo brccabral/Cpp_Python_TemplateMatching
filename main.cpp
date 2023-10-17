@@ -16,5 +16,14 @@ int main(int argc, char const *argv[])
     cv::waitKey();
     cv::destroyAllWindows();
 
+    cv::Mat result;
+    result.create(farm_img.rows, farm_img.cols, CV_32FC1);
+    cv::matchTemplate(farm_img, needle_img, result, cv::TM_CCOEFF_NORMED);
+
+    // show result
+    cv::imshow("Result", result);
+    cv::waitKey();
+    cv::destroyAllWindows();
+
     return 0;
 }
