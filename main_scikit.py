@@ -7,17 +7,19 @@ import cv2
 # %%
 farm_img = ski.io.imread("assets/farm.png")
 needle_img = ski.io.imread("assets/needle.png")
-yellow = (255, 255, 0)
+farm_img = cv2.cvtColor(farm_img, cv2.COLOR_RGB2BGR)
+needle_img = cv2.cvtColor(needle_img, cv2.COLOR_RGB2BGR)
+yellow = (0, 255, 255)
 
 # %%
 # show farm
-cv2.imshow("Farm", cv2.cvtColor(farm_img, cv2.COLOR_RGB2BGR))
+cv2.imshow("Farm", farm_img)
 cv2.waitKey()
 cv2.destroyAllWindows()
 
 # %%
 # show needle
-cv2.imshow("Needle", cv2.cvtColor(needle_img, cv2.COLOR_RGB2BGR))
+cv2.imshow("Needle", needle_img)
 cv2.waitKey()
 cv2.destroyAllWindows()
 
@@ -44,13 +46,14 @@ cv2.rectangle(farm_img, (x, y), (x + w, y + h), yellow, 2)
 
 # %%
 # show farm
-cv2.imshow("Farm", cv2.cvtColor(farm_img, cv2.COLOR_RGB2BGR))
+cv2.imshow("Farm", farm_img)
 cv2.waitKey()
 cv2.destroyAllWindows()
 
 # %%
 # reset farm
 farm_img = ski.io.imread("assets/farm.png")
+farm_img = cv2.cvtColor(farm_img, cv2.COLOR_RGB2BGR)
 
 # %%
 threshold = 0.9
@@ -66,7 +69,7 @@ for x, y in zip(xloc, yloc):
 
 # %%
 # show farm
-cv2.imshow("Farm", cv2.cvtColor(farm_img, cv2.COLOR_RGB2BGR))
+cv2.imshow("Farm", farm_img)
 cv2.waitKey()
 cv2.destroyAllWindows()
 
@@ -86,6 +89,7 @@ len(rectangles)
 # %%
 # reset farm
 farm_img = ski.io.imread("assets/farm.png")
+farm_img = cv2.cvtColor(farm_img, cv2.COLOR_RGB2BGR)
 
 # %%
 # loop the new rectangles
@@ -94,6 +98,6 @@ for x, y, w, h in rectangles:
 
 # %%
 # show farm
-cv2.imshow("Farm", cv2.cvtColor(farm_img, cv2.COLOR_RGB2BGR))
+cv2.imshow("Farm", farm_img)
 cv2.waitKey()
 cv2.destroyAllWindows()
