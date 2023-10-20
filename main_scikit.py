@@ -1,26 +1,28 @@
 # %%
-import cv2
 import numpy as np
+import skimage as ski
+from skimage.feature import match_template
+import cv2
 
 # %%
-farm_img = cv2.imread("assets/farm.png", cv2.IMREAD_UNCHANGED)
-needle_img = cv2.imread("assets/needle.png", cv2.IMREAD_UNCHANGED)
-yellow = (0, 255, 255)
+farm_img = ski.io.imread("assets/farm.png")
+needle_img = ski.io.imread("assets/needle.png")
+yellow = (255, 255, 0)
 
 # %%
 # show farm
-cv2.imshow("Farm", farm_img)
+cv2.imshow("Farm", cv2.cvtColor(farm_img, cv2.COLOR_RGB2BGR))
 cv2.waitKey()
 cv2.destroyAllWindows()
 
 # %%
 # show needle
-cv2.imshow("Needle", needle_img)
+cv2.imshow("Needle", cv2.cvtColor(needle_img, cv2.COLOR_RGB2BGR))
 cv2.waitKey()
 cv2.destroyAllWindows()
 
 # %%
-result = cv2.matchTemplate(farm_img, needle_img, cv2.TM_CCOEFF_NORMED)
+result = match_template(farm_img, needle_img)
 
 # %%
 # show result
@@ -29,29 +31,31 @@ cv2.waitKey()
 cv2.destroyAllWindows()
 
 # %%
-min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+ij = np.unravel_index(np.argmax(result), result.shape)
+c, x, y = ij[::-1]
+x = int(x)
+y = int(y)
 
 # %%
 h, w, c = needle_img.shape
 
 # %%
-# adds a yellow rectangle at the best needle result position
-# changes farm_img
-cv2.rectangle(farm_img, max_loc, (max_loc[0] + w, max_loc[1] + h), yellow, 2)
+cv2.rectangle(farm_img, (x, y), (x + w, y + h), yellow, 2)
 
 # %%
 # show farm
-cv2.imshow("Farm", farm_img)
+cv2.imshow("Farm", cv2.cvtColor(farm_img, cv2.COLOR_RGB2BGR))
 cv2.waitKey()
 cv2.destroyAllWindows()
 
 # %%
 # reset farm
-farm_img = cv2.imread("assets/farm.png", cv2.IMREAD_UNCHANGED)
+farm_img = ski.io.imread("assets/farm.png")
 
 # %%
-threshold = 0.60
-yloc, xloc = np.where(result >= np.array(threshold))
+threshold = 0.9
+yloc, xloc, cloc = np.where(result >= np.array(threshold))
+
 
 # %%
 len(xloc)
@@ -62,7 +66,7 @@ for x, y in zip(xloc, yloc):
 
 # %%
 # show farm
-cv2.imshow("Farm", farm_img)
+cv2.imshow("Farm", cv2.cvtColor(farm_img, cv2.COLOR_RGB2BGR))
 cv2.waitKey()
 cv2.destroyAllWindows()
 
@@ -74,13 +78,14 @@ for x, y in zip(xloc, yloc):
     # locations that have only one rectangle
     rectangles.append([int(x), int(y), int(w), int(h)])
 
+
 # %%
 rectangles, weights = cv2.groupRectangles(rectangles, 1, 0.2)
 len(rectangles)
 
 # %%
 # reset farm
-farm_img = cv2.imread("assets/farm.png", cv2.IMREAD_UNCHANGED)
+farm_img = ski.io.imread("assets/farm.png")
 
 # %%
 # loop the new rectangles
@@ -89,8 +94,6 @@ for x, y, w, h in rectangles:
 
 # %%
 # show farm
-cv2.imshow("Farm", farm_img)
+cv2.imshow("Farm", cv2.cvtColor(farm_img, cv2.COLOR_RGB2BGR))
 cv2.waitKey()
 cv2.destroyAllWindows()
-
-# %%

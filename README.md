@@ -7,7 +7,8 @@ https://www.youtube.com/watch?v=vXqKniVe6P8
 ### Python
 ```sh
 pip install opencv-python
-pip install numpy
+# pip install numpy  # opencv installs numpy
+pip install sckit-image
 ```
 
 ### C++
